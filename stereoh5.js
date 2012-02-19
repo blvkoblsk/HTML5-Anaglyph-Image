@@ -2,9 +2,9 @@
 
 HTML5 Stereo Viewer
 
-version 1.3
+version 1.3 
 
-Copyright (C) 2011 Yury Golubinsky
+Copyright (C) 2011 Yury Golubinsky Comments add by logicmd
 
 This work is licensed under the
 Creative Commons Attribution 3.0 Unported License.
@@ -14,10 +14,10 @@ visit http://creativecommons.org/licenses/by/3.0/
 */
 
 var stereover = "1.3";
-var images = new Array();
-var imagesT = new Array();
+var images = new Array(); //images的url的Array
+var imagesT = new Array(); //images的class的Array
 var imagesC = new Array();
-var imageN = 0;
+var imageN = 0; //images的指针
 var stereoMode = 5;
 var stereoBGcolor = 0;
 var stereoMouse = -1;
@@ -29,7 +29,7 @@ var stereoCaption = true;
 var stereoCaptionSrc = "alt";
 var stereoDefType = "stereoRL";
 var stereoiOS = false;
-var stereoIE = false;
+var stereoIE = false; //检测是否是IE
 var stereourl = "http://urixblog.com/html5-stereo-viewer";
 var stereourlvis = "http://urixblog.com/...";
 var stereoModes = 11;
@@ -47,6 +47,7 @@ function stereoViewerOpen(Mode, Swap, BGColor, Caption, CaptionSrc, Type) {
 	Type		- default stereo images type ("anaglyph", "flat", "stereoLR", "stereoRL", ""), for images with class="stereo". The value "" corresponds to "stereoRL"
 	*/
 
+	// 读参数表
 	if (Caption != undefined)
 		stereoCaption = Caption;
 	if (CaptionSrc != "")
@@ -64,11 +65,12 @@ function stereoViewerOpen(Mode, Swap, BGColor, Caption, CaptionSrc, Type) {
 		
 	stereoIE = (/MSIE (\d+\.\d+);/.test(navigator.userAgent));
 
+    // 大框架“stereoViewver”
 	if (document.getElementById("stereoViewer")) {
 		document.body.insertBefore(document.getElementById("stereoViewer"), document.body.firstChild);
 		document.body.removeChild(document.getElementById("stereoViewer"));
 	};
-
+    // 大框架“stereoViewver”的格式细节
 	var div = document.createElement("div");
 	div.id = "stereoViewer";
 	div.style.position = "fixed";
@@ -78,7 +80,9 @@ function stereoViewerOpen(Mode, Swap, BGColor, Caption, CaptionSrc, Type) {
 	div.style.backgroundColor = "#000";
 	div.style.visibility = "visible";
 	div.style.fontFamily = "arial,verdana,helvetica";
-
+    
+	// 大div“stereoViewver”下有Canvas显示图片，stereoControls，stereoHelp，stereoNav作为辅助功能
+	// 目前发现controller和helper以及nav无法显示出来，拟删除
 	div.innerHTML = '\
 			<div id="stereoCanvasdiv" style="" onmouseover="stereoDrawControls(event)" onmousemove="stereoDrawControls(event);" onmouseout="stereoDrawControls(event);" onmouse="stereoDrawControls(event);" onclick="stereoMouseClick(event);" ondblclick="if (stereoiOS) stereoViewerOptionsOpen(!stereoOptVis);" >\
 				<canvas id="stereoCanvas"></canvas>\
@@ -226,6 +230,7 @@ function stereoViewerOpen(Mode, Swap, BGColor, Caption, CaptionSrc, Type) {
 		stereoGlasses = stereoGetCookieGlasses();
 	};
 
+	// mode不知道哦加的是什么
 	for (var i = 0; i <= stereoModes; i++)
 		document.getElementById("modeselect").options[i].selected = stereoMode == i;
 
@@ -252,7 +257,9 @@ function stereoViewerOpen(Mode, Swap, BGColor, Caption, CaptionSrc, Type) {
 			document.getElementsByTagName("head")[0].appendChild(meta);
 	};
 	
+	// 把所有的输入image放入内容，包括URL，变换类型，和标题
 	stereoCountImages();
+	// 画出变换后的图片。
 	stereoDrawImage();
 };
 
@@ -454,10 +461,12 @@ function stereoDrawImage() {
 	var stereoSwap_ = stereoSwap;
 	
 	function prepareWH2() {
+		// canvas的高是主要限制。
 		if (((cnvswidth - stereoNav * 2) / (cnvsheight - mc)) >= (img.width / img.height / 2)) {
 			imh = cnvsheight - mc;
 			imw = imh * (img.width / img.height) / 2;
 		}
+		// canvas的宽是主要限制。
 		else {
 			imw = cnvswidth - stereoNav * 2;
 			imh = imw * (img.height / img.width) * 2;
@@ -510,6 +519,7 @@ function stereoDrawImage() {
 
 	var cnvsheight = document.getElementById("stereoViewer").clientHeight;
 	var cnvswidth = document.getElementById("stereoViewer").clientWidth;
+	// 把stereoViewer的宽高赋值给stereoCanvasdiv和stereoCanvas
 	var elmnt = document.getElementById("stereoCanvasdiv");
 	//if (elmnt.height != cnvsheight)
 		elmnt.height = cnvsheight;
@@ -524,7 +534,7 @@ function stereoDrawImage() {
 	///////////////////////////////////
 	img = new Image();
 	img.src = images[imageN];
-	
+	// 背景颜色啊！
 	switch (stereoBGcolor) {
 		case 0:
 			ctx.fillStyle = "rgba(0, 0, 0, 1)";
@@ -549,6 +559,7 @@ function stereoDrawImage() {
 		var indexy = 0;
 		
 		function prepareAnaglyphData(inter) {
+			// buf用来取
 			buf = document.createElement('canvas');
 			buf.width = imw * 2;
 			buf.height = imh;
@@ -1010,6 +1021,10 @@ function stereoCountImages() {
 	for (j = 0; j < document.images.length; j++) {
 		var cn = getClassName(document.images[j], new Array("anaglyph", "flat", "stereo", "stereoLR", "stereoRL"));
 		if (cn != "") {
+			// images是所有image的url
+			// imagesC是parse前的class
+			// imagesT是parse后的class
+			// imagesN是image的指针标记
 			images[n] = document.images[j].src;
 			imagesC[n] = document.images[j].getAttribute(stereoCaptionSrc);
 			imagesT[n] = cn;
@@ -1149,6 +1164,7 @@ function stereoSaveDef() {
 	stereoCheckCookie();
 };
 
+// 检查Cookies，存一些参数为default。
 function stereoCheckCookie() {
 	var sm = stereoGetCookie();
 	if ((sm >= 0) && (sm <= stereoModes))
@@ -1196,3 +1212,4 @@ function stereoCorrectAfterMode() {
 		document.getElementById("stereoGlasses").style.visibility = "hidden";
 	}
 }
+
