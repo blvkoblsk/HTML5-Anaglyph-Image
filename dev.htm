@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTML5 Stereo viewer</title>
+  </head>
+  <body>
+    <h1>HTML5 Stereo viewer</h1>
+    <div>
+
+	    <script type="application/x-javascript" src="stereoDraw.js"> </script>
+	    
+		<input type="button" value="Proceed" onclick="stereoDrawImage('s-lr.jpg','stereoLR', 'RedCyan', 'stereoCanvas')" />
+		<input type="button" value="Proceed2" onclick="stereoDrawImage('s-rl.jpg','stereoRL', 'RedCyan', 'stereoCanvas2')" />
+
+      <div style="visibility:hidden;">
+        <h2>Source images</h2>
+         <img src="s-lr.jpg" width=1 alt="Left-Right stereo pair source, Toys" />
+         <img src="s-rl.jpg" width=1 alt="Right-Left stereo pair source, Toys" />
+	  </div>
+	  <div id="canvasSet">
+	  	<h2>Canvas Sets</h2>
+        <canvas id="stereoCanvas"></canvas>
+        <canvas id="stereoCanvas2"></canvas>
+        <span id="canvasEnd"></span>   
+      </div>
+    </div>
+  </body>
+
+
+</html>
