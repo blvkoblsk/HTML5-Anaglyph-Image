@@ -13,7 +13,7 @@ visit http://creativecommons.org/licenses/by/3.0/
 
 */
 
-function stereoDrawImage(imgSrc, stereoType, anaglyphMode, cnvsDstID) {
+function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, cnvsDstID) {
 	
 	/*
 	 * 以下是alt方法获得img的src，无论如何DOM中必须载入
@@ -48,7 +48,7 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, cnvsDstID) {
 	var ctx = cnvs.getContext('2d');
 	
 	// 获得Canvas尺寸
-	var imw=0, imh=0; 
+	var imw = 0, imh = 0; 
 	prepareSize(imw, imh); 
 	cnvs.width = imw;
 	cnvs.height = imh;
@@ -61,7 +61,7 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, cnvsDstID) {
 	
 	// 准备Canvas图像数据
 	imageData = ctx.createImageData(imw, imh);
-	process(imw, imh, iData1, iData2)
+	process(imw, imh, iData1, iData2);
 
 	/* 
 	 * prepareSize()
@@ -79,17 +79,17 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, cnvsDstID) {
 	
 	function prepareSize(_imw, _imh) {
 		switch(stereoType) {
-			case 'anaglyph':
-			case 'flat':
+			case 'Anaglyph':
+			case 'Flat':
 				imw = loadWidth;
 				imh = loadHeight;
 				break;
-			case 'stereoLR':
-			case 'stereoRL':
+			case 'StereoLR':
+			case 'StereoRL':
 				imw = loadWidth/2;
 				imh = loadHeight;
 				break;
-			case 'stereoWD':
+			case 'StereoWD':
 				imw = loadWidth;
 				imh = loadHeight/2;
 				break;
@@ -120,22 +120,25 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, cnvsDstID) {
 		bufctx.drawImage(img, 0, 0, loadWidth, loadHeight);
 		
 		switch(stereoType) {
-			case "anaglyph":
-			case "flat":
+			case "Anaglyph":
+			case "Flat":
 				iData1 = bufctx.getImageData(0, 0, imw, imh);
 				iData2 = iData1;
 				break;
-			case "stereoLR":
+			case "StereoLR":
 				iData1 = bufctx.getImageData(0, 0, imw, imh);
 				iData2 = bufctx.getImageData(imw, 0, imw, imh);
 				break;
-			case "stereoRL":
+			case "StereoRL":
 				iData2 = bufctx.getImageData(0, 0, imw, imh);
 				iData1 = bufctx.getImageData(imw, 0, imw, imh);
 				break;	
-			case "stereoWD":
+			case "StereoUD":
 				iData1 = bufctx.getImageData(0, 0, imw, imh);
 				iData2 = bufctx.getImageData(0, imh, imw, imh);
+			case "StereoDU":
+				iData2 = bufctx.getImageData(0, 0, imw, imh);
+				iData1 = bufctx.getImageData(0, imh, imw, imh);
 				break;
 		}
 	};
@@ -155,26 +158,161 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, cnvsDstID) {
 	 */
 	function process(_imw, _imh, _iData1, _iData2) {
 		var index = 0;
-		var idr = iData1;
-		var idg = iData2;
-		var idb = iData2;
-	
 		var y = imw * imh;
 		
-		for (x = 0; x++ < y; ) {
-			r = idr.data[index+1] * 0.7 + idr.data[index+2] * 0.3;
-			g = idg.data[index+1];
-			b = idb.data[index+2];
-			r = Math.min(Math.max(r, 0), 255);			
-			imageData.data[index++] = r;
-			imageData.data[index++] = g;
-			imageData.data[index++] = b;
-			imageData.data[index++] = 0xFF;
+		switch(anaglyphMode) {
+			case 'TrueAnaglyph':
+				if (glassType == 'RedCyan') {
+					var idr = iData1;
+					var idg = iData2;
+					var idb = iData2;
+				}
+				else if (glassType == 'GreenMagenta') {
+					var idr = iData2;
+					var idg = iData1;
+					var idb = iData1;
+				}
+				else {
+					return;
+				}
+					
+				for (x = 0; x++ < y; ) {
+					// Data1 - left; Data2 - right
+					r = idr.data[index+0] * 0.299 + idr.data[index+1] * 0.587 + idr.data[index+2] * 0.114;
+					if (glassType == 'GreenMagenta') {
+						g = idg.data[index+0] * 0.299 + idg.data[index+1] * 0.587 + idg.data[index+2] * 0.114;
+						b = 0;
+					} else {
+						g = 0;
+						b = idb.data[index+0] * 0.299 + idb.data[index+1] * 0.587 + idb.data[index+2] * 0.114;
+					}
+					r = Math.min(Math.max(r, 0), 255);
+					b = Math.min(Math.max(b, 0), 255);
+					imageData.data[index++] = r;
+					imageData.data[index++] = g;
+					imageData.data[index++] = b;
+					imageData.data[index++] = 0xFF;
+
+				};
+				break;
+			
+			case 'GrayAnaglyph':
+				if (glassType == 'RedCyan') {
+					var idr = iData1;
+					var idg = iData2;
+					var idb = iData2;
+				}
+				else if (glassType == 'GreenMagenta') {
+					var idr = iData2;
+					var idg = iData1;
+					var idb = iData2;
+				}
+				else {
+					return;
+				}
+					
+				for (x = 0; x++ < y; ) {
+					// Data1 - left; Data2 - right
+					r = idr.data[index+0] * 0.299 + idr.data[index+1] * 0.587 + idr.data[index+2] * 0.114;
+					g = idg.data[index+0] * 0.299 + idg.data[index+1] * 0.587 + idg.data[index+2] * 0.114;
+					b = idb.data[index+0] * 0.299 + idb.data[index+1] * 0.587 + idb.data[index+2] * 0.114;
+					r = Math.min(Math.max(r, 0), 255);
+					g = Math.min(Math.max(g, 0), 255);
+					b = Math.min(Math.max(b, 0), 255);
+					imageData.data[index++] = r;
+					imageData.data[index++] = g;
+					imageData.data[index++] = b;
+					imageData.data[index++] = 0xFF;
+				};
+				break;
+				
+			case 'ColorAnaglyph':
+				if (glassType == 'RedCyan') {
+					var idr = iData1;
+					var idg = iData2;
+					var idb = iData2;
+				}
+				else if (glassType == 'GreenMagenta') {
+					var idr = iData2;
+					var idg = iData1;
+					var idb = iData2;
+				}
+				else {
+					return;
+				}
+					
+				for (x = 0; x++ < y; ) {
+					// Data1 - left; Data2 - right
+					imageData.data[index] = idr.data[index++];
+					imageData.data[index] = idg.data[index++];
+					imageData.data[index] = idb.data[index++];
+					imageData.data[index] = 0xFF; index++;
+				};
+				break;
+			
+			case 'OptimizedAnaglyph':
+				if (glassType == 'RedCyan') {
+					var idr = iData1;
+					var idg = iData2;
+					var idb = iData2;
+				}
+				else if (glassType == 'GreenMagenta') {
+					var idr = iData2;
+					var idg = iData1;
+					var idb = iData2;
+				}
+				else {
+					return;
+				}
+					
+				for (x = 0; x++ < y; ) {
+					// Data1 - left; Data2 - right
+					r = idr.data[index+1] * 0.7 + idr.data[index+2] * 0.3;
+					g = idg.data[index+1];
+					b = idb.data[index+2];
+					r = Math.min(Math.max(r, 0), 255);			
+					imageData.data[index++] = r;
+					imageData.data[index++] = g;
+					imageData.data[index++] = b;
+					imageData.data[index++] = 0xFF;
+				}
+				break;			
+			
+			case 'Optimized+Anaglyph':
+				if (glassType == 'RedCyan') {
+					var idr = iData1;
+					var idg = iData2;
+					var idb = iData2;
+				}
+				else if (glassType == 'GreenMagenta') {
+					var idr = iData2;
+					var idg = iData1;
+					var idb = iData2;
+				}
+				else {
+					return;
+				}
+					
+				for (x = 0; x++ < y; ) {
+					// Data1 - left; Data2 - right
+					g = idr.data[index+1] + 0.45 * Math.max(0, idr.data[index+0] - idr.data[index+1]);
+					b = idr.data[index+2] + 0.25 * Math.max(0, idr.data[index+0] - idr.data[index+2]);
+					r = g * 0.749 + b * 0.251;
+					//r = Math.pow(g * 0.749 + b * 0.251, 1/1.6);
+					g = idg.data[index+1] + 0.45 * Math.max(0, idg.data[index+0] - idg.data[index+1]);
+					b = idb.data[index+2] + 0.25 * Math.max(0, idb.data[index+0] - idb.data[index+2]);
+					r = Math.min(Math.max(r, 0), 255);
+					g = Math.min(Math.max(g, 0), 255);
+					b = Math.min(Math.max(b, 0), 255);
+					imageData.data[index++] = r;
+					imageData.data[index++] = g;
+					imageData.data[index++] = b;
+					imageData.data[index++] = 0xFF;
+				}
+				break;	
 		}
-		
 		ctx.putImageData(imageData, 0, 0);
 		
 	};
-	
 	
 }
