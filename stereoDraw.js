@@ -13,7 +13,7 @@ visit http://creativecommons.org/licenses/by/3.0/
 
 */
 
-function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, cnvsDstID) {
+function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, scaleRate, cnvsDstID) {
 	
 	/*
 	 * 以下是alt方法获得img的src，无论如何DOM中必须载入
@@ -61,7 +61,12 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, cnvsDstID)
 	
 	// 准备Canvas图像数据
 	imageData = ctx.createImageData(imw, imh);
+
 	process(imw, imh, iData1, iData2);
+	
+	// scale
+	scaleIt(scaleRate);
+
 
 	/* 
 	 * prepareSize()
@@ -311,8 +316,46 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, cnvsDstID)
 				}
 				break;	
 		}
+		
 		ctx.putImageData(imageData, 0, 0);
 		
+	};
+	
+	/*
+	 * Scale a image in canvas Elements
+	 * Ususally 3 steps are needed.
+	 *  1. create a temp canvas to contain image data.
+	 *  specify the width and height to be exactly the
+	 *  width and height of the image.
+	 *
+	 *  2. prepare destinate canvas size.
+	 * 
+	 *  3. scale and drawImage from temp canvas to destinate
+	 *  canvas.
+	 * 
+	 * P.S.
+	 * Image Data这种标量数据scale很麻烦，如果是自己画的矢量数据则简单很多
+	 * https://developer.mozilla.org/en/Canvas_tutorial/Transformations
+	 * 
+	 */
+	
+	function scaleIt(scaleRate) {
+		// Step 1
+		var tmpCvs = document.createElement('canvas');
+		tmpCvs.width = imw;
+		tmpCvs.height = imh;
+		tmpCvs.getContext("2d").putImageData(imageData, 0, 0);
+		
+		// Step 2
+		//var sCnvs = document.getElementById("scaleCanvas");
+		cnvs.width = imw * scaleRate;
+		cnvs.height = imh * scaleRate;
+		
+		// Step 3
+		//sCtx = sCnvs.getContext("2d");
+		ctx.scale(scaleRate, scaleRate);
+		ctx.drawImage(tmpCvs, 0, 0);
+
 	};
 	
 }

@@ -12,20 +12,21 @@ All codes are rewritten to be more simple and efficient.
 
 - `imgSrc`: url of source, **NOTICE**, the image must be loaded in the html.
 - `stereoType`: Stereo type of the source image
-  - `"Flat"`
-  - `"Anaglyph"`
-  - `"StereoLR"`
-  - `"StereoRL"`
-  - `"StereoUD"`
-  - `"StereoDU"`
+  * `"Flat"`
+  * `"Anaglyph"`
+  * `"StereoLR"`
+  * `"StereoRL"`
+  * `"StereoUD"`
+  * `"StereoDU"`
 - `anaglyphMode`: Anaglyph Mode of the procedure
-  - `"TrueAnaglyph"`
-  - `"GrayAnaglyph"`
-  - `"ColorAnaglyph"`
-  - `"OptimizedAnaglyph"`
+  * `"TrueAnaglyph"`
+  * `"GrayAnaglyph"`
+  * `"ColorAnaglyph"`
+  * `"OptimizedAnaglyph"`
 - `glassType`: Anaglyph Mode of the procedure
-  - `"RedCyan"`
-  - `"GreenMagenta"`
+  * `"RedCyan"`
+  * `"GreenMagenta"`
+- `scaleRate`: Scale the final anaglyph image.
 - `cnvsDstID`: Destination Canvas ID，**NOTICE**, the canvas must exist in the html.
 
 
