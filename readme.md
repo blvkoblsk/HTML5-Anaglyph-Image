@@ -58,32 +58,32 @@ Same principle as red-cyan, somewhat newer. Less chromatic aberration, as the re
 All the following formula and demo anaglyph picture is based on the **Red-Cyan** glasses.
 
 #### True Anaglyphs
-![](http://storage.logicmd.net/repos/HTML5-Stereo-Viewer/formulatrueanaglyph.gif)
+![](https://github.com/logicmd/HTML5-Anaglyph-Image/raw/core/doc/formulatrueanaglyph.gif)
 
 - Dark image
 - No color reproduction
 - Little ghosting
 
-![](http://storage.logicmd.net/repos/HTML5-Stereo-Viewer/trueanaglyph_small.jpg)
+![](https://github.com/logicmd/HTML5-Anaglyph-Image/raw/core/doc/trueanaglyph_small.jpg)
 
 #### Gray Anaglyphs ####
-![](http://storage.logicmd.net/repos/HTML5-Stereo-Viewer/formulagrayanaglyph.gif)
+![](https://github.com/logicmd/HTML5-Anaglyph-Image/raw/core/doc/formulagrayanaglyph.gif)
 
 - No color reproduction
 - More ghosting than true anaglyphs
 
-![](http://storage.logicmd.net/repos/HTML5-Stereo-Viewer/grayanaglyph_small.jpg)
+![](https://github.com/logicmd/HTML5-Anaglyph-Image/raw/core/doc/grayanaglyph_small.jpg)
 
 #### Color Anaglyphs ####
-![](http://storage.logicmd.net/repos/HTML5-Stereo-Viewer/formulacoloranaglyph.gif)
+![](https://github.com/logicmd/HTML5-Anaglyph-Image/raw/core/doc/formulacoloranaglyph.gif)
 
 - Partial color reproduction (but not as good as color anaglyphs)
 - Less retinal rivalry than color anaglyphs
 
-![](http://storage.logicmd.net/repos/HTML5-Stereo-Viewer/coloranaglyph_small.jpg)
+![](https://github.com/logicmd/HTML5-Anaglyph-Image/raw/core/doc/coloranaglyph_small.jpg)
 
 #### Optimized Anaglyphs ####
-![](http://storage.logicmd.net/repos/HTML5-Stereo-Viewer/formulaoptimizedanaglyph.gif)
+![](https://github.com/logicmd/HTML5-Anaglyph-Image/raw/core/doc/formulaoptimizedanaglyph.gif)
 
 In addition, we applied a gamma correction (gamma value 1.5) to brighten up final red channel ra. Stereoscopic Player implements a further improved algorithm which partially maps the red channels to green and blue before applying the above formula.
 
@@ -92,7 +92,7 @@ In addition, we applied a gamma correction (gamma value 1.5) to brighten up fina
 
 > When we talk about retinal rivalry, we just mean the retinal rivalry caused by brightness differences of colored objects. Of course there is an additional form of retinal rivalry, independently of the anaglyph method used: retinal rivalry caused by the different color channels perceived by left and right eye.
 
-![](http://storage.logicmd.net/repos/HTML5-Stereo-Viewer/optimizedanaglyph_small.jpg)
+![](https://github.com/logicmd/HTML5-Anaglyph-Image/raw/core/doc/optimizedanaglyph_small.jpg)
 
 #### Optimized+ Anaglyphs ####
 

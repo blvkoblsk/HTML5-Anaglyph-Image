@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTML5 Stereo viewer</title>
+  </head>
+  <body>
+    <h1>HTML5 Stereo viewer</h1>
+    <div>
+
+	    <script type="application/x-javascript" src="stereoDraw.js"> </script>
+	    
+		<input type="button" value="stereoDrawImage('img/s-lr.jpg','StereoLR', 'TrueAnaglyph', 'RedCyan', '1.5', 'stereoCanvas')" onclick="stereoDrawImage('s-lr.jpg','StereoLR', 'TrueAnaglyph', 'RedCyan', '1.5', 'stereoCanvas')" /> <br />
+		<input type="button" value="stereoDrawImage('img/s-rl.jpg','StereoRL', 'OptimizedAnaglyph', 'RedCyan', '0.5', 'stereoCanvas')" onclick="stereoDrawImage('s-rl.jpg','StereoRL', 'OptimizedAnaglyph', 'RedCyan', '0.5', 'stereoCanvas')" /> <br />
+		<input type="button" value="stereoDrawImage('img/s-rl3.jpg','StereoRL', 'Optimized+Anaglyph', 'GreenMagenta', '1', 'stereoCanvas')" onclick="stereoDrawImage('s-rl3.jpg','StereoRL', 'Optimized+Anaglyph', 'GreenMagenta', '1', 'stereoCanvas')" /> <br />
+
+      <div style="visibility:hidden;">
+        <h2>Source images</h2>
+         <img src="img/s-lr.jpg" width=1 alt="Left-Right stereo pair source, Toys" />
+         <img src="img/s-rl.jpg" width=1 alt="Right-Left stereo pair source, Toys" />
+         <img src="img/s-rl3.jpg" width=1 alt="Right-Left stereo pair source, Gate" />
+	  </div>
+	  <div id="canvasSet">
+	  	<h2>Canvas Sets</h2>
+        <canvas id="stereoCanvas"></canvas>
+        <span id="canvasEnd"></span>   
+      </div>
+    </div>
+  </body>
+
+
+</html>
