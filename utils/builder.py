@@ -1,7 +1,7 @@
 import os
 
-source = '../src/video.anaglyph.js'
-build = '../build/video.anaglyph.js'
+source = '../src/image.anaglyph.js'
+build = '../build/image.anaglyph.js'
 license = '../LICENSE'
 
 os.system( 'java -jar compiler/compiler.jar --language_in=ECMASCRIPT5 --js ' + source + ' --js_output_file ' + build )
