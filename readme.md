@@ -1,6 +1,9 @@
-#HTML5-Anaglyph-Image
+HTML5-Anaglyph-Image
+====================
+
 This is the core api of master.
 All codes are rewritten to be more simple and efficient.
+
 ## Setup
 1. add __stereoDraw.js__ in your head of html.
 2. call the function.
