@@ -2,32 +2,33 @@
 This is the core api of master.
 All codes are rewritten to be more simple and efficient.
 ## Setup
-1. add ```stereoDraw.js``` in your head of html.
-2. call the function ```stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, cnvsDstID)```
+1. add __stereoDraw.js__ in your head of html.
+2. call the function.
 
 
 ## Usage
 
-`stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, cnvsDstID)`
+    stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, cnvsDstID)
 
-- `imgSrc`: url of source, **NOTICE**, the image must be loaded in the html.
-- `stereoType`: Stereo type of the source image
-  * `"Flat"`
-  * `"Anaglyph"`
-  * `"StereoLR"`
-  * `"StereoRL"`
-  * `"StereoUD"`
-  * `"StereoDU"`
-- `anaglyphMode`: Anaglyph Mode of the procedure
-  * `"TrueAnaglyph"`
-  * `"GrayAnaglyph"`
-  * `"ColorAnaglyph"`
-  * `"OptimizedAnaglyph"`
-- `glassType`: Anaglyph Mode of the procedure
-  * `"RedCyan"`
-  * `"GreenMagenta"`
-- `scaleRate`: Scale the final anaglyph image.
-- `cnvsDstID`: Destination Canvas ID，**NOTICE**, the canvas must exist in the html.
+
+- __imgSrc__: url of source, **NOTICE**, the image must be loaded in the html.
+- __stereoType__: Stereo type of the source image
+  * "Flat"
+  * "Anaglyph"
+  * "StereoLR"
+  * "StereoRL"
+  * "StereoUD"
+  * "StereoDU"
+- __anaglyphMode__: Anaglyph Mode of the procedure
+  * "TrueAnaglyph"
+  * "GrayAnaglyph"
+  * "ColorAnaglyph"
+  * "OptimizedAnaglyph"
+- __glassType__: Anaglyph Mode of the procedure
+  * "RedCyan"
+  * "GreenMagenta"
+- __scaleRate__: Scale the final anaglyph image.
+- __cnvsDstID__: Destination Canvas ID，**NOTICE**, the canvas must exist in the html.
 
 
 ----------
@@ -35,10 +36,10 @@ All codes are rewritten to be more simple and efficient.
 
 ## Stereo Type
 
-- `"Flat"` -> A flat picture.
-- `"Anaglyph"` -> Already got a anaglyph views.
-- `"StereoLR/StereoRL"` -> Left-Right/Right-Left Views
-- `"StereoUD/StereoDU"` -> Up-Down/Down-up Views
+- "Flat" -> A flat picture.
+- "Anaglyph" -> Already got a anaglyph views.
+- "StereoLR/StereoRL" -> Left-Right/Right-Left Views
+- "StereoUD/StereoDU" -> Up-Down/Down-up Views
 
 ## Glasses Type ##
 
@@ -53,7 +54,7 @@ patent-free, limited color perception, currently the most common in use; images 
 Same principle as red-cyan, somewhat newer. Less chromatic aberration, as the red and blue in magenta balance well with green.
 
 
-## Anaglyphs Mode 
+## Anaglyphs Mode
 
 All the following formula and demo anaglyph picture is based on the **Red-Cyan** glasses.
 
@@ -96,5 +97,5 @@ In addition, we applied a gamma correction (gamma value 1.5) to brighten up fina
 
 #### Optimized+ Anaglyphs ####
 
-Highly optimized anaglyphs could give better visual feeling. 
+Highly optimized anaglyphs could give better visual feeling.
 
