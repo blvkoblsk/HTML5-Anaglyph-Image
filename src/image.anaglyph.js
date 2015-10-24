@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  HTML5 Anaglyph Image
  * 
  *  Copyright (C) 2012 Kevin Tong (logicmd AT gmail.com)
@@ -33,7 +33,7 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, scaleRate,
 	img.src = imgSrc;
 	var imgArray = document.getElementsByTagName('img');
 	var imgNum = imgArray.length;
-	//img = imgArray[0];
+	img = imgArray[0];
 	var loadHeight = img.height;
 	var loadWidth = img.width;
 	
@@ -60,8 +60,7 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, scaleRate,
 	
 	// 两个视点的图像数据
 	var tmpCnvs1 = document.createElement('canvas');
-	var iData1 = 0;
-	var iData2 = 0;
+	var iData1, iData2;
 	prepareData(imw, imh, iData1, iData2);
 	
 	// 准备Canvas图像数据
@@ -146,6 +145,7 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, scaleRate,
 			case "StereoUD":
 				iData1 = bufctx.getImageData(0, 0, imw, imh);
 				iData2 = bufctx.getImageData(0, imh, imw, imh);
+                break;
 			case "StereoDU":
 				iData2 = bufctx.getImageData(0, 0, imw, imh);
 				iData1 = bufctx.getImageData(0, imh, imw, imh);
@@ -169,18 +169,19 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, scaleRate,
 	function process(_imw, _imh, _iData1, _iData2) {
 		var index = 0;
 		var y = imw * imh;
-		
+		var idr, idg, idb;
 		switch(anaglyphMode) {
+			// The code quality below is bad. Anyone can further optimize it.
 			case 'TrueAnaglyph':
 				if (glassType == 'RedCyan') {
-					var idr = iData1;
-					var idg = iData2;
-					var idb = iData2;
+					idr = iData1;
+					idg = iData2;
+					idb = iData2;
 				}
 				else if (glassType == 'GreenMagenta') {
-					var idr = iData2;
-					var idg = iData1;
-					var idb = iData1;
+					idr = iData2;
+					idg = iData1;
+					idb = iData1;
 				}
 				else {
 					return;
@@ -208,14 +209,14 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, scaleRate,
 			
 			case 'GrayAnaglyph':
 				if (glassType == 'RedCyan') {
-					var idr = iData1;
-					var idg = iData2;
-					var idb = iData2;
+					idr = iData1;
+					idg = iData2;
+					idb = iData2;
 				}
 				else if (glassType == 'GreenMagenta') {
-					var idr = iData2;
-					var idg = iData1;
-					var idb = iData2;
+					idr = iData2;
+					idg = iData1;
+					idb = iData2;
 				}
 				else {
 					return;
@@ -238,14 +239,14 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, scaleRate,
 				
 			case 'ColorAnaglyph':
 				if (glassType == 'RedCyan') {
-					var idr = iData1;
-					var idg = iData2;
-					var idb = iData2;
+					idr = iData1;
+					idg = iData2;
+					idb = iData2;
 				}
 				else if (glassType == 'GreenMagenta') {
-					var idr = iData2;
-					var idg = iData1;
-					var idb = iData2;
+					idr = iData2;
+					idg = iData1;
+					idb = iData2;
 				}
 				else {
 					return;
@@ -262,14 +263,14 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, scaleRate,
 			
 			case 'OptimizedAnaglyph':
 				if (glassType == 'RedCyan') {
-					var idr = iData1;
-					var idg = iData2;
-					var idb = iData2;
+					idr = iData1;
+					idg = iData2;
+					idb = iData2;
 				}
 				else if (glassType == 'GreenMagenta') {
-					var idr = iData2;
-					var idg = iData1;
-					var idb = iData2;
+					idr = iData2;
+					idg = iData1;
+					idb = iData2;
 				}
 				else {
 					return;
@@ -290,14 +291,14 @@ function stereoDrawImage(imgSrc, stereoType, anaglyphMode, glassType, scaleRate,
 			
 			case 'Optimized+Anaglyph':
 				if (glassType == 'RedCyan') {
-					var idr = iData1;
-					var idg = iData2;
-					var idb = iData2;
+					idr = iData1;
+					idg = iData2;
+					idb = iData2;
 				}
 				else if (glassType == 'GreenMagenta') {
-					var idr = iData2;
-					var idg = iData1;
-					var idb = iData2;
+					idr = iData2;
+					idg = iData1;
+					idb = iData2;
 				}
 				else {
 					return;
